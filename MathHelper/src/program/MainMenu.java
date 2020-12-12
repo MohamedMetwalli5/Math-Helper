@@ -13,18 +13,20 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 
 public class MainMenu extends JFrame{
 	private int systemOption = 0 , methodOption = 0;
     JFrame f = new JFrame();
-    JPanel p2 = new JPanel();
+    JPanel p = new JPanel();
     eve v = new eve();
     JLabel l1;
     JLabel l2;
-    JButton b1;
-    JButton b2;
-    JButton b3;
-    JButton b4;
+    JLabel l3;
+    JTextField t1;
+    JTextField t2;
+    JButton submit;
+    
     JComboBox methods;
     private String[] s = {"","Gauss Elimination using pivoting","Gauss Elimination","Gauss Jordan","LU Decomposition","Gauss Seidil","Jacobi Iteration"};
 	public MainMenu() {
@@ -34,50 +36,48 @@ public class MainMenu extends JFrame{
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(400, 10);
-        p2.setSize(800, 800);
-        p2.setBackground(Color.yellow);
-        p2.setLayout(null);		
-	    l1 = new JLabel("Choose the size of system");
-	    l2 = new JLabel("Choose the required operation");
-        b1 = new JButton("3X3");
-	    b2 = new JButton("4X4");
-	    b3 = new JButton("5X5");
-	    b4 = new JButton("6X6");
+        p.setSize(800, 800);
+        p.setBackground(Color.yellow);
+        p.setLayout(null);		
+	    l1 = new JLabel("Choose the number of rows");
+	    l2 = new JLabel("Choose the number of columns");
+	    l3 = new JLabel("Choose the required operation");
+	    submit = new JButton("Submit");
+	    t1 = new JTextField("");
+	    t2 = new JTextField("");
 	    methods = new JComboBox();
 	    
-	    
-	    l1.setBounds(120, 30, 600, 60);
+	    l1.setBounds(100, 50, 700, 60);
 	    l1.setForeground(Color.red);
 	    l1.setFont(new Font("atilic",Font.BOLD,40));
 	    
-	    b1.setBounds(230, 120, 250, 60);
-	    b1.setBackground(Color.green);
-	    b1.setForeground(Color.DARK_GRAY);
-	    b1.setFont(new Font("atilic",Font.BOLD,30));
+	    t1.setBounds(170, 150, 500, 60);
+	    t1.setForeground(Color.blue);
+	    t1.setFont(new Font("atilic",Font.BOLD,30));
 	    
-	    b2.setBounds(230, 220, 250, 60);
-	    b2.setBackground(Color.green);
-	    b2.setForeground(Color.DARK_GRAY);
-	    b2.setFont(new Font("atilic",Font.BOLD,30));
-	    
-	    b3.setBounds(230, 320, 250, 60);
-	    b3.setBackground(Color.green);
-	    b3.setForeground(Color.DARK_GRAY);
-	    b3.setFont(new Font("atilic",Font.BOLD,30));
-
-	    b4.setBounds(230, 420, 250, 60);
-	    b4.setBackground(Color.green);
-	    b4.setForeground(Color.DARK_GRAY);
-	    b4.setFont(new Font("atilic",Font.BOLD,30));    
-	   
-	    l2.setBounds(120, 500, 600, 60);
-	    l2.setForeground(Color.magenta);
+	    l2.setBounds(100, 250, 700, 60);
+	    l2.setForeground(Color.red);
 	    l2.setFont(new Font("atilic",Font.BOLD,40));
 	    
-	    methods.setBounds(160, 580, 500, 40);
+	    t2.setBounds(170, 310, 500, 60);
+	    t2.setForeground(Color.blue);
+	    t2.setFont(new Font("atilic",Font.BOLD,30));
+	    
+	    l3.setBounds(120, 420, 600, 60);
+	    l3.setForeground(Color.magenta);
+	    l3.setFont(new Font("atilic",Font.BOLD,40));
+	   
+	    
+	    methods.setBounds(160, 500, 500, 40);
 	    methods.setBackground(Color.cyan);
 	    methods.setForeground(Color.DARK_GRAY);
 	    methods.setFont(new Font("atilic",Font.BOLD,30));   
+	    
+	    submit.setBounds(260, 600, 250, 60);
+	    submit.setBackground(Color.green);
+	    submit.setForeground(Color.DARK_GRAY);
+	    submit.setFont(new Font("atilic",Font.BOLD,30));
+	    
 	    
 	    methods.addItem(s[0]);
 	    methods.addItem(s[1]);
@@ -86,92 +86,68 @@ public class MainMenu extends JFrame{
 	    methods.addItem(s[4]);
 	    methods.addItem(s[5]);
 	    
-	    this.add(p2);
-	    p2.add(l1);
-	    p2.add(b1);
-	    p2.add(b2);
-	    p2.add(b3);
-	    p2.add(b4);
-	    p2.add(l2);
-	    p2.add(methods);
 	    
-	    b1.addActionListener(v);
-	    b2.addActionListener(v);
-	    b3.addActionListener(v);
-	    b4.addActionListener(v);
+	    
+	    this.add(p);
+	    p.add(l1);
+	    p.add(t1);
+	    p.add(l2);
+	    p.add(l3);
+	    p.add(t2);
+	    p.add(submit);
+	    p.add(methods);
+	    
+	    submit.addActionListener(v);
 	    methods.addActionListener(v);
+	    
   }
 	 private class eve implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == b1) { 
-				  systemOption = 1;
-				  //op.setVisible(true);
-				  f.setVisible(false);
-				  f.dispose();
-				}else if(e.getSource() == b2) { 
-					systemOption = 2;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
-				}else if(e.getSource() == b3) { 
-					systemOption = 3;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
-				}else if(e.getSource() == b4) { 
-					systemOption = 4;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
-				}
-				
 				String item = (String) methods.getSelectedItem();
 				if(item.equals(s[1])) { 
 				   methodOption = 1;
-				  //op.setVisible(true);
-				  f.setVisible(false);
-				  f.dispose();
 				}else if(item.equals(s[2])) { 
-					  methodOption = 2;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
+					   methodOption = 2;
 				}else if(item.equals(s[3])) { 
-					methodOption = 3;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
+					   methodOption = 3;
 				}else if(item.equals(s[4])) { 
-					methodOption = 4;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
+					   methodOption = 4;
 				}else if(item.equals(s[5])) { 
-					methodOption = 5;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
+					   methodOption = 5;
 				}else if(item.equals(s[6])) { 
-					methodOption = 6;
-					  //op.setVisible(true);
-					  f.setVisible(false);
-					  f.dispose();
+					   methodOption = 6;
 				}
 				
 				
-				if(systemOption != 0 && methodOption != 0) {
-					if(systemOption == 1) {
-					   System3x3 op = new System3x3(methodOption);
-					}else if(systemOption == 2) {
-						   System4x4 op = new System4x4(methodOption);
-					}else if(systemOption == 3) {
-						   System5x5 op = new System5x5(methodOption);
-					}else if(systemOption == 4) {
-						   System6x6 op = new System6x6(methodOption);
+				if(e.getSource() == submit && t1.getText().length() > 0 && t2.getText().length() > 0 && methodOption != 0) { 
+					if(!t1.getText().equals(t2.getText())) {
+						t1.setText("rows & columns must be equal");
+						t2.setText("rows & columns must be equal");
+					}else {
+						int flag = 0;
+						for(int i=0;i<t1.getText().length();i++) {
+						  if(t1.getText().contains("-") || t1.getText().charAt(0) == '0' || !Character.isDigit(t1.getText().charAt(i)) ) {
+							 t1.setText("Enter only positive numberes");
+							 flag = 1;
+						  }
+						  if(t2.getText().contains("-") || t2.getText().charAt(0) == '0' || !Character.isDigit(t2.getText().charAt(i)) ) {
+							  t2.setText("Enter only positive numberes");
+							  flag = 1;
+						  }
+						}
+						if(flag != 1) {
+						  Input inp = new Input(methodOption , t1.getText());
+						  //op.setVisible(true);
+						  f.setVisible(false);
+						  f.dispose();
+						}
+						
 					}
 				}
+				
+				
 				
 			}
 			

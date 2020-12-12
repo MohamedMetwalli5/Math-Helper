@@ -23,8 +23,6 @@ public class Result extends JFrame{
         p.setLayout(null);		
 	  
 	    
-
-	    
 	    this.add(p);
 
 
