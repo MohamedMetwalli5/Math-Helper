@@ -167,20 +167,92 @@ public class Operation{
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static double[] GaussSeidil(double[][] a, double[]b) {
-		double[] x = new double[b.length];
-		return b;
-		
-	}
+	public static void GaussSeidalSolver(double [][] augmentedMatrix,int iterations,double epsilon){
+        int matrixSize = augmentedMatrix.length;
+        int currIterations = 1;
+        //double epsilon = 1e-15;
+        double [] xNew = new double[matrixSize];
+        double [] xOld = new double[matrixSize];
+        //initialize xNew Array with initial values {0,0,0,0,0}
+        Arrays.fill(xNew,0);
+        int counter = 0;
+        while(counter < iterations){
+            for (int i = 0; i<matrixSize; i++){
+                double sum = augmentedMatrix[i][matrixSize];
+                for (int j = 0; j<matrixSize; j++){
+                    if (j != i) {
+                        sum = sum - augmentedMatrix[i][j] * xNew[j];
+                    }
+                }
+                xNew[i] = 1 / augmentedMatrix[i][i] * sum;
+            }
+            System.out.println(currIterations + " - Approximation" );
+            for(int i = 0; i<matrixSize; i++){
+                System.out.println("x" + (i+1) + " = " + xNew[i]);
+            }
+            System.out.println("");
+            currIterations++;
+            counter++;
+            boolean stop = true;
+            for (int i = 0; i < matrixSize && stop; i++)
+                if (Math.abs(xNew[i] - xOld[i]) > epsilon)
+                    stop = false;
+            if (stop || iterations == 100)
+                break;
+            xOld = xNew.clone();
+        }
+    }
 
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	public static double[] JacobiIteration(double[][] a, double[]b) {
-		double[] x = new double[b.length];
-		return b;
-		
+	public static void jacobi(double[][] matrix, int numOfIterations, double epsilon) {
+		int iterationsCount = 0;
+		int size = matrix.length;
+		double[] InitialGuess = new double[size];
+		Arrays.fill(InitialGuess,0);
+		double[][] results = new double[size][numOfIterations];
+		while (iterationsCount < numOfIterations) {
+			for (int i = 0; i < size; i++) {
+				double sum = matrix[i][size];
+				for (int j = 0; j < size; j++) {
+					if (j != i) {
+						sum -= matrix[i][j] * InitialGuess[j];
+					}
+				}
+				sum = 1 / matrix[i][i] * sum;
+				// To store results in an array.
+				results[i][iterationsCount] = sum;
+			}
+
+			// To update initialGuess array with the new one.
+			for (int i = 0; i < size; i++) {
+				InitialGuess[i] = results[i][iterationsCount];
+			}
+
+			// just for printing each result
+			 System.out.println((iterationsCount+1) + " - Approximation" );
+	            for(int i = 0; i<size; i++){
+	                System.out.println("x" + (i+1) + " = " + InitialGuess[i]);
+	            }
+	            System.out.println("");
+			// end printing
+
+			// Test stop
+			if (iterationsCount > 0) {
+				boolean stop = true;
+				for (int i = 0; i < size && stop; i++) {
+					if (Math.abs(InitialGuess[i] - results[i][iterationsCount - 1]) > epsilon) {
+						stop = false;
+					}
+				}
+				if (stop || iterationsCount + 1 == 100)
+					break;
+			}
+			
+			iterationsCount++;
+		}
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
