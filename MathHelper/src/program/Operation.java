@@ -167,14 +167,15 @@ public class Operation{
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void GaussSeidalSolver(double [][] augmentedMatrix,int iterations,double epsilon){
+	public static void GaussSeidalSolver(double [][] augmentedMatrix,double [] intialGuess,int iterations,double epsilon){
         int matrixSize = augmentedMatrix.length;
         int currIterations = 1;
         //double epsilon = 1e-15;
         double [] xNew = new double[matrixSize];
         double [] xOld = new double[matrixSize];
         //initialize xNew Array with initial values {0,0,0,0,0}
-        Arrays.fill(xNew,0);
+        //Arrays.fill(xNew,0);
+        xNew = intialGuess;
         int counter = 0;
         while(counter < iterations){
             for (int i = 0; i<matrixSize; i++){
@@ -210,8 +211,8 @@ public class Operation{
 	public static void jacobi(double[][] matrix, int numOfIterations, double epsilon) {
 		int iterationsCount = 0;
 		int size = matrix.length;
-		double[] InitialGuess = new double[size];
-		Arrays.fill(InitialGuess,0);
+		//double[] InitialGuess = new double[size];
+		//Arrays.fill(InitialGuess,0);
 		double[][] results = new double[size][numOfIterations];
 		while (iterationsCount < numOfIterations) {
 			for (int i = 0; i < size; i++) {
