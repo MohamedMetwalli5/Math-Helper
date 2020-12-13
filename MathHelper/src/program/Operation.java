@@ -208,11 +208,9 @@ public class Operation{
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	public static void jacobi(double[][] matrix, int numOfIterations, double epsilon) {
+		public static void jacobi(double[][] matrix, double[] InitialGuess, int numOfIterations, double epsilon) {
 		int iterationsCount = 0;
 		int size = matrix.length;
-		//double[] InitialGuess = new double[size];
-		//Arrays.fill(InitialGuess,0);
 		double[][] results = new double[size][numOfIterations];
 		while (iterationsCount < numOfIterations) {
 			for (int i = 0; i < size; i++) {
@@ -233,11 +231,11 @@ public class Operation{
 			}
 
 			// just for printing each result
-			 System.out.println((iterationsCount+1) + " - Approximation" );
-	            for(int i = 0; i<size; i++){
-	                System.out.println("x" + (i+1) + " = " + InitialGuess[i]);
-	            }
-	            System.out.println("");
+			System.out.println((iterationsCount + 1) + " - Approximation");
+			for (int i = 0; i < size; i++) {
+				System.out.println("x" + (i + 1) + " = " + InitialGuess[i]);
+			}
+			System.out.println("");
 			// end printing
 
 			// Test stop
@@ -251,7 +249,7 @@ public class Operation{
 				if (stop || iterationsCount + 1 == 100)
 					break;
 			}
-			
+
 			iterationsCount++;
 		}
 	}
