@@ -145,8 +145,34 @@ public class Operation{
 	
 	public static double[] GaussJordan(double[][] a, double[]b) {
 		double[] x = new double[b.length];
-		return b;
-		
+		double factor = 1;
+		///the forward elimination
+		for(int k=0;k<b.length-1;k++) {
+			for(int i=k+1;i<b.length;i++) {
+				factor = a[i][k] / a[k][k];
+				a[i][k]=0;
+				for(int j=k+1;j<b.length;j++) {
+					a[i][j] = a[i][j] - factor * a[k][j];
+				}
+				b[i] = b[i] - (factor * b[k]);
+			}
+		}
+		///the backward elimination
+		for(int k=b.length-1;k>0;k--) {
+			for(int i=k-1;i>=0;i--) {
+				factor = a[i][k] / a[k][k];
+				a[i][k]=0;
+				for(int j=k+1;j<b.length;j++) {
+					a[i][j] = a[i][j] - factor * a[k][j];
+				}
+				b[i] = b[i] - (factor * b[k]);
+			}
+		}
+		///the forward substitution
+		for(int i=0;i<b.length;i++) {
+			x[i]=b[i]/a[i][i];
+		}
+		return x;
 	}
 
 	
