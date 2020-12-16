@@ -14,8 +14,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-
-
 public class Input extends JFrame{
     JFrame f = new JFrame();
     JPanel p = new JPanel();
@@ -27,7 +25,7 @@ public class Input extends JFrame{
     JTextArea t;
     JButton submit;
     JScrollPane scroll;
-	public Input(int methodOption , String n) { 
+	public Input(int methodOption , String n , String epsilon , String numberOfIterations) { 
 		this.size = Integer.parseInt(n);
 	    this.setTitle("Math Helper");
         this.setSize(800, 800);
@@ -38,7 +36,7 @@ public class Input extends JFrame{
         p.setSize(800, 800);
         p.setBackground(Color.orange);
         p.setLayout(null);		
-	  
+	    
         l1 = new JLabel("Enter the equations");
 	    t = new JTextArea("");
 	    submit = new JButton("Submit");
@@ -55,6 +53,8 @@ public class Input extends JFrame{
 	    l1.setBounds(160, 50, 700, 60);
 	    l1.setForeground(Color.red);
 	    l1.setFont(new Font("atilic",Font.BOLD,40));
+	    
+	    
 	    
 	    this.add(p);
 	    p.add(l1);
