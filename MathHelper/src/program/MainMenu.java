@@ -25,10 +25,13 @@ public class MainMenu extends JFrame{
     JLabel l3;
     JTextField t1;
     JTextField t2;
+    JLabel l4;
+    JLabel l5;
+    JTextField epsilon;
+    JTextField numberOfIterations;
     JButton submit;
-    
     JComboBox methods;
-    private String[] s = {"","Gauss Elimination using pivoting","Gauss Elimination","Gauss Jordan","LU Decomposition","Gauss Seidil","Jacobi Iteration"};
+    private String[] s = {"","Gauss Elimination using pivoting","Gauss Elimination","Gauss Jordan","LU Decomposition","Gauss Seidil","Jacobi Iterative"};
 	public MainMenu() {
 	    this.setTitle("Math Helper");
         this.setSize(800, 800);
@@ -42,38 +45,58 @@ public class MainMenu extends JFrame{
 	    l1 = new JLabel("Choose the number of rows");
 	    l2 = new JLabel("Choose the number of columns");
 	    l3 = new JLabel("Choose the required operation");
+	    l4 = new JLabel("Epsilon");
+	    l5 = new JLabel("Number of iterations");
 	    submit = new JButton("Submit");
 	    t1 = new JTextField("");
 	    t2 = new JTextField("");
+	    epsilon = new JTextField();
+	    numberOfIterations = new JTextField();
 	    methods = new JComboBox();
 	    
 	    l1.setBounds(100, 50, 700, 60);
 	    l1.setForeground(Color.red);
 	    l1.setFont(new Font("atilic",Font.BOLD,40));
 	    
-	    t1.setBounds(170, 150, 500, 60);
+	    t1.setBounds(170, 150, 400, 50);
 	    t1.setForeground(Color.blue);
-	    t1.setFont(new Font("atilic",Font.BOLD,30));
+	    t1.setFont(new Font("atilic",Font.BOLD,20));
 	    
 	    l2.setBounds(100, 250, 700, 60);
 	    l2.setForeground(Color.red);
 	    l2.setFont(new Font("atilic",Font.BOLD,40));
 	    
-	    t2.setBounds(170, 310, 500, 60);
+	    t2.setBounds(170, 310, 400, 50);
 	    t2.setForeground(Color.blue);
-	    t2.setFont(new Font("atilic",Font.BOLD,30));
+	    t2.setFont(new Font("atilic",Font.BOLD,20));
 	    
 	    l3.setBounds(120, 420, 600, 60);
 	    l3.setForeground(Color.magenta);
 	    l3.setFont(new Font("atilic",Font.BOLD,40));
 	   
 	    
-	    methods.setBounds(160, 500, 500, 40);
+	    methods.setBounds(160, 500, 520, 40);
 	    methods.setBackground(Color.cyan);
 	    methods.setForeground(Color.DARK_GRAY);
 	    methods.setFont(new Font("atilic",Font.BOLD,30));   
 	    
-	    submit.setBounds(260, 600, 250, 60);
+	    l4.setBounds(120, 550, 110, 60);
+	    l4.setForeground(Color.black);
+	    l4.setFont(new Font("atilic",Font.BOLD,20));
+	    
+	    epsilon.setBounds(210, 560, 400, 40);
+	    epsilon.setForeground(Color.blue);
+	    epsilon.setFont(new Font("atilic",Font.BOLD,20));
+	    
+	    l5.setBounds(120, 600, 200, 60);
+	    l5.setForeground(Color.black);
+	    l5.setFont(new Font("atilic",Font.BOLD,20));
+	    
+	    numberOfIterations.setBounds(330, 610, 350, 40);
+	    numberOfIterations.setForeground(Color.blue);
+	    numberOfIterations.setFont(new Font("atilic",Font.BOLD,20));
+	    
+	    submit.setBounds(260, 660, 250, 60);
 	    submit.setBackground(Color.green);
 	    submit.setForeground(Color.DARK_GRAY);
 	    submit.setFont(new Font("atilic",Font.BOLD,30));
@@ -85,8 +108,12 @@ public class MainMenu extends JFrame{
 	    methods.addItem(s[3]);
 	    methods.addItem(s[4]);
 	    methods.addItem(s[5]);
+	    methods.addItem(s[6]);
 	    
-	    
+	    l4.setVisible(false);
+	    epsilon.setVisible(false);
+	    l5.setVisible(false);
+	    numberOfIterations.setVisible(false);
 	    
 	    this.add(p);
 	    p.add(l1);
@@ -94,8 +121,14 @@ public class MainMenu extends JFrame{
 	    p.add(l2);
 	    p.add(l3);
 	    p.add(t2);
+	    p.add(l4);
+	    p.add(epsilon);
+	    p.add(l5);
+	    p.add(numberOfIterations);
 	    p.add(submit);
 	    p.add(methods);
+	    
+	    
 	    
 	    submit.addActionListener(v);
 	    methods.addActionListener(v);
@@ -106,47 +139,93 @@ public class MainMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String item = (String) methods.getSelectedItem();
-				if(item.equals(s[1])) { 
+			    if(item.equals(s[0])) {
+				   methodOption = 0;
+				   l4.setVisible(false);
+				   epsilon.setVisible(false);
+				   l5.setVisible(false);
+				   numberOfIterations.setVisible(false);	
+				}else if(item.equals(s[1])) { 
 				   methodOption = 1;
+				   l4.setVisible(false);
+				   epsilon.setVisible(false);
+				   l5.setVisible(false);
+				   numberOfIterations.setVisible(false);
 				}else if(item.equals(s[2])) { 
 					   methodOption = 2;
+					   l4.setVisible(false);
+					   epsilon.setVisible(false);
+					   l5.setVisible(false);
+					   numberOfIterations.setVisible(false);
 				}else if(item.equals(s[3])) { 
 					   methodOption = 3;
+					   l4.setVisible(false);
+					   epsilon.setVisible(false);
+					   l5.setVisible(false);
+					   numberOfIterations.setVisible(false);
 				}else if(item.equals(s[4])) { 
 					   methodOption = 4;
+					   l4.setVisible(false);
+					   epsilon.setVisible(false);
+					   l5.setVisible(false);
+					   numberOfIterations.setVisible(false);
 				}else if(item.equals(s[5])) { 
 					   methodOption = 5;
+					   l4.setVisible(true);
+					   epsilon.setVisible(true);
+					   l5.setVisible(true);
+					   numberOfIterations.setVisible(true);
 				}else if(item.equals(s[6])) { 
 					   methodOption = 6;
+					   l4.setVisible(true);
+					   epsilon.setVisible(true);
+					   l5.setVisible(true);
+					   numberOfIterations.setVisible(true);
 				}
 				
-				
-				if(e.getSource() == submit && t1.getText().length() > 0 && t2.getText().length() > 0 && methodOption != 0) { 
+				if(e.getSource() == submit) {
+					JTextField[] array = {t1,t2,epsilon,numberOfIterations};
 					if(!t1.getText().equals(t2.getText())) {
 						t1.setText("rows & columns must be equal");
 						t2.setText("rows & columns must be equal");
 					}else {
 						int flag = 0;
-						for(int i=0;i<t1.getText().length();i++) {
-						  if(t1.getText().contains("-") || t1.getText().charAt(0) == '0' || !Character.isDigit(t1.getText().charAt(i)) ) {
-							 t1.setText("Enter only positive numberes");
-							 flag = 1;
-						  }
-						  if(t2.getText().contains("-") || t2.getText().charAt(0) == '0' || !Character.isDigit(t2.getText().charAt(i)) ) {
-							  t2.setText("Enter only positive numberes");
-							  flag = 1;
-						  }
-						}
-						if(flag != 1) {
-						  Input inp = new Input(methodOption , t1.getText());
-						  //op.setVisible(true);
-						  f.setVisible(false);
-						  f.dispose();
+						for(int i=0;i<array.length;i++) {
+							if(array[i].getText().contains("-")) {
+								array[i].setText("Enter only positive numberes");
+								flag = 1;
+							}
+							for(int j=0;j<array[i].getText().length();j++) {
+								if(i != 2 && i != 3 && !Character.isDigit(array[i].getText().charAt(j))) {
+									array[i].setText("Enter only positive integer numberes");
+									flag = 1;
+								}
+								if(i == 2 || i == 3) {
+									if(!Character.isDigit(array[i].getText().charAt(j)) && array[i].getText().charAt(j) != '.') {
+										array[i].setText("Enter only positive numberes");
+										flag = 1;	
+									}
+								}
+							}
 						}
 						
+						if(flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
+							  if(methodOption == 5 || methodOption == 6) {
+								  if(epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0){
+									  Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
+									  //op.setVisible(true);
+									  f.setVisible(false);
+									  f.dispose();
+								  }
+							  }else {
+								  Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
+								  //op.setVisible(true);
+								  f.setVisible(false);
+								  f.dispose();
+							  }
+						}
 					}
 				}
-				
 				
 				
 			}
