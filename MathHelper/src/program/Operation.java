@@ -141,8 +141,6 @@ public class Operation{
 	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
 	public static double[] GaussJordan(double[][] a, double[]b) {
 		double[] x = new double[b.length];
 		double factor = 1;
@@ -279,8 +277,149 @@ public class Operation{
 			iterationsCount++;
 		}
 	}
-	
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private static double[][] rowSwapping(double[][] a, double[]b,int m,int n){
+		double[][] augmented = new double[a.length][a[0].length+1];
+		for(int x=0;x<a.length;x++){
+			for (int y=0;y<a[0].length;y++){
+				augmented[x][y]=a[x][y];
+			}
+		}
+		for (int x=0;x<b.length;x++){
+			augmented[x][a.length]=b[x];
+		}
+		for (int i=0;i<a[0].length;i++){
+			double temp=a[m][i];
+			a[m][i]=a[n][i];
+			a[n][i]=temp;
+		}
+		return augmented;
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private static double[][] rowAndColumnSwapping(double[][] a, double[]b,int k,int l,int m,int n){
+		double[][] augmented = new double[a.length][a[0].length+1];
+		for(int x=0;x<a.length;x++){
+			for (int y=0;y<a[0].length;y++){
+				augmented[x][y]=a[x][y];
+			}
+		}
+		for (int x=0;x<b.length;x++){
+			augmented[x][a.length]=b[x];
+		}
+		augmented=rowSwapping(a,b,k,m);
+		for (int i=0;i<a[0].length;i++){
+			double temp=a[i][l];
+			a[i][l]=a[i][n];
+			a[i][n]=temp;
+		}
+		return augmented;
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static double[][] partitioningWithScaling(double[][] a, double[]b,int i,int j,String type) {
+		double[][] augmented = new double[a.length][a[0].length+1];
+		for(int x=0;x<a.length;x++){
+			for (int y=0;y<a[0].length;y++){
+				augmented[x][y]=a[x][y];
+			}
+		}
+		for (int x=0;x<b.length;x++){
+			augmented[x][a.length]=b[x];
+		}
+		if(type=="complete pivoting") {
+			for (int x = i; x < a.length; x++) {
+				double maxInRow = augmented[i][j];
+				for (int y = j; y < a[0].length; y++) {
+					if (augmented[x][y] > maxInRow) {
+						maxInRow = augmented[x][y];
+					}
+				}
+				for (int y = j; y < a[0].length; y++) {
+					augmented[x][y] /= maxInRow;
+				}
+			}
+			//now i have the rectangle scalde.
+			double maxInRectangle = augmented[i][j];
+			int maxInRectangleRow = i;
+			int maxInRectangleColumn = j;
+			for (int x = i; x < a.length; x++) {
+				for (int y = j; y < a[0].length; y++) {
+					if (augmented[x][y] > maxInRectangle) {
+						maxInRectangle = augmented[x][y];
+						maxInRectangleRow = x;
+						maxInRectangleColumn = y;
+					}
+				}
+			}
+			//now we need to swap them.
+			return rowAndColumnSwapping(getFirstNColumn(augmented,a.length),getColumn(augmented, augmented.length-1),i,j,maxInRectangleRow,maxInRectangleColumn);
+		}
+		else {//(type=="partial pivoting")
+			for (int x = i; x < a.length; x++) {
+				double maxInRow = augmented[i][j];
+				for (int y = j; y < a[0].length; y++) {
+					if (augmented[x][y] > maxInRow) {
+						maxInRow = augmented[x][y];
+					}
+				}
+				for (int y = j; y < a[0].length; y++) {
+					augmented[x][y] /= maxInRow;
+				}
+			}
+			//now i have the rectangle scalde.
+			double maxInColumn = augmented[i][j];
+			int maxInColumnlRow = i;
+			for (int x = i; x < a.length; x++) {
+				if (augmented[x][j] > maxInColumn) {
+					maxInColumn = augmented[x][j];
+					maxInColumnlRow = x;
+				}
+			}
+			//now we need to swap them.
+			return rowSwapping(getFirstNColumn(augmented,a.length),getColumn(augmented, augmented.length-1),i,maxInColumnlRow);
+		}
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static double[] getColumn(double[][] array, int index){
+		double[] column = new double[array[0].length]; // Here I assume a rectangular 2D array!
+		for(int i=0; i<column.length; i++){
+			column[i] = array[i][index];
+		}
+		return column;
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static double[][] getFirstNColumn(double[][] array, int n){
+		double[][] columns = new double[array[0].length][n]; // Here I assume a rectangular 2D array!
+		for(int i=0; i<array.length; i++){
+			for (int j=0;j<n;j++){
+				columns[i][j]=array[i][j];
+			}
+		}
+		return columns;
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static double[][] scaling(double[][] a, double[]b) {
+		double[][] augmented = new double[a.length][a[0].length+1];
+		for(int x=0;x<a.length;x++){
+			for (int y=0;y<a[0].length;y++){
+				augmented[x][y]=a[x][y];
+			}
+		}
+		for (int x=0;x<b.length;x++){
+			augmented[x][a.length]=b[x];
+		}
+		for (int x = 0; x < a.length; x++) {
+			double maxInRow = augmented[x][0];
+			for (int y = 0; y < a[0].length; y++) {
+				if (augmented[x][y] > maxInRow) {
+					maxInRow = augmented[x][y];
+				}
+			}
+			for (int y = 0; y < a[0].length; y++) {
+				augmented[x][y] /= maxInRow;
+			}
+		}
+		return augmented;
+	}
 }
 
