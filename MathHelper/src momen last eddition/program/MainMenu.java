@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 public class MainMenu extends JFrame{
-	private int systemOption = 0 , methodOption = 0;
+	private int  methodOption = 0 , LUOption = 0;
     JFrame f = new JFrame();
     JPanel p = new JPanel();
     eve v = new eve();
@@ -35,8 +35,10 @@ public class MainMenu extends JFrame{
 	JTextField url;
     JButton submit;
     JComboBox methods;
+	JComboBox LUmethods;
     private String[] s = {"","Gauss Elimination using pivoting","Gauss Elimination","Gauss Jordan","LU Decomposition","Gauss Seidil","Jacobi Iterative"};
-	public MainMenu() {
+	private String[] LUs = {"","Downlittle","Crout","Cholesky"};
+    public MainMenu() {
 	    this.setTitle("Math Helper");
         this.setSize(800, 800);
         this.setVisible(true);
@@ -59,6 +61,7 @@ public class MainMenu extends JFrame{
 	    epsilon = new JTextField();
 	    numberOfIterations = new JTextField();
 	    methods = new JComboBox();
+		LUmethods = new JComboBox();
 	    l1.setBounds(100, 50, 700, 60);
 	    l1.setForeground(Color.red);
 	    l1.setFont(new Font("atilic",Font.BOLD,40));
@@ -90,6 +93,10 @@ public class MainMenu extends JFrame{
 		numberOfIterations.setBounds(330, 610, 350, 40);
 	    numberOfIterations.setForeground(Color.blue);
 	    numberOfIterations.setFont(new Font("atilic",Font.BOLD,20));
+		LUmethods.setBounds(210, 560, 400, 40);
+		LUmethods.setBackground(Color.pink);
+		LUmethods.setForeground(Color.blue);
+		LUmethods.setFont(new Font("atilic",Font.BOLD,20));
 	    submit.setBounds(260, 660, 250, 60);
 	    submit.setBackground(Color.green);
 	    submit.setForeground(Color.DARK_GRAY);
@@ -110,6 +117,10 @@ public class MainMenu extends JFrame{
 	    methods.addItem(s[4]);
 	    methods.addItem(s[5]);
 	    methods.addItem(s[6]);
+		LUmethods.addItem(LUs[0]);
+		LUmethods.addItem(LUs[1]);
+		LUmethods.addItem(LUs[2]);
+		LUmethods.addItem(LUs[3]);
 	    l4.setVisible(false);
 	    epsilon.setVisible(false);
 	    l5.setVisible(false);
@@ -127,20 +138,24 @@ public class MainMenu extends JFrame{
 	    p.add(submit);
 		p.add(readFromFile);
 	    p.add(methods);
+		p.add(LUmethods);
 	    submit.addActionListener(v);
 	    methods.addActionListener(v);
 		readFromFile.addActionListener(v);
+		LUmethods.addActionListener(v);
   }
 	 private class eve implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String item = (String) methods.getSelectedItem();
+			String LUitem = (String) LUmethods.getSelectedItem();
 			if(item.equals(s[0])) {
 			   methodOption = 0;
 			   l4.setVisible(false);
 			   epsilon.setVisible(false);
 			   l5.setVisible(false);
 			   numberOfIterations.setVisible(false);
+			   LUmethods.setVisible(false);
 			   return;
 			}else if(item.equals(s[1])) {
 			   methodOption = 1;
@@ -148,36 +163,51 @@ public class MainMenu extends JFrame{
 			   epsilon.setVisible(false);
 			   l5.setVisible(false);
 			   numberOfIterations.setVisible(false);
+			   LUmethods.setVisible(false);
 			}else if(item.equals(s[2])) {
 			   methodOption = 2;
 			   l4.setVisible(false);
 			   epsilon.setVisible(false);
 			   l5.setVisible(false);
 			   numberOfIterations.setVisible(false);
+			   LUmethods.setVisible(false);
 			}else if(item.equals(s[3])) {
 			   methodOption = 3;
 			   l4.setVisible(false);
 			   epsilon.setVisible(false);
 			   l5.setVisible(false);
 			   numberOfIterations.setVisible(false);
+			   LUmethods.setVisible(false);
 			}else if(item.equals(s[4])) {
 			   methodOption = 4;
 			   l4.setVisible(false);
 			   epsilon.setVisible(false);
 			   l5.setVisible(false);
 			   numberOfIterations.setVisible(false);
+				LUmethods.setVisible(false);
 			}else if(item.equals(s[5])) {
 			   methodOption = 5;
 			   l4.setVisible(true);
 			   epsilon.setVisible(true);
 			   l5.setVisible(true);
 			   numberOfIterations.setVisible(true);
+				LUmethods.setVisible(false);
 			}else if(item.equals(s[6])) {
 			   methodOption = 6;
 			   l4.setVisible(true);
 			   epsilon.setVisible(true);
 			   l5.setVisible(true);
 			   numberOfIterations.setVisible(true);
+				LUmethods.setVisible(false);
+			}
+			if(LUitem.equals(LUs[0])) {
+				LUOption = 0;
+			}else if(LUitem.equals(LUs[1])) {
+				LUOption = 1;
+			}else if(LUitem.equals(LUs[2])) {
+				LUOption = 2;
+			}else if(LUitem.equals(LUs[3])) {
+				LUOption = 3;
 			}
 			if(e.getSource() == submit) {
 				JTextField[] array = {t1,t2,epsilon,numberOfIterations};
@@ -204,20 +234,39 @@ public class MainMenu extends JFrame{
 							}
 						}
 					}
-					if(flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
-						if(methodOption == 5 || methodOption == 6) {
-							if(epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0){
-								Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
+					if(methodOption == 4 && LUOption != 0) {
+						if (flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
+							if (methodOption == 5 || methodOption == 6) {
+								if (epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0) {
+									Input inp = new Input(methodOption, t1.getText(), epsilon.getText(), numberOfIterations.getText(), LUOption);
+									//op.setVisible(true);
+									f.setVisible(false);
+									f.dispose();
+								}
+							} else {
+								Input inp = new Input(methodOption, t1.getText(), epsilon.getText(), numberOfIterations.getText(), LUOption);
 								//op.setVisible(true);
 								f.setVisible(false);
 								f.dispose();
 							}
-						}else {
-							Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
-							//op.setVisible(true);
-							f.setVisible(false);
-							f.dispose();
-							dispose();
+						}
+					}
+					else if(methodOption != 4) {
+						if(flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
+							if(methodOption == 5 || methodOption == 6) {
+								if(epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0){
+									Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText() , 0);
+									//op.setVisible(true);
+									f.setVisible(false);
+									f.dispose();
+								}
+							}else {
+								Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText() , 0);
+								//op.setVisible(true);
+								f.setVisible(false);
+								f.dispose();
+								dispose();
+							}
 						}
 					}
 				}
@@ -245,20 +294,38 @@ public class MainMenu extends JFrame{
 						}
 					}
 				}
-				if(flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
-					if(methodOption == 5 || methodOption == 6) {
-						if(epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0){
-							Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
+				if(methodOption == 4 && LUOption != 0) {
+					if (flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
+						if (methodOption == 5 || methodOption == 6) {
+							if (epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0) {
+								Input inp = new Input(methodOption, t1.getText(), epsilon.getText(), numberOfIterations.getText(), LUOption);
+								//op.setVisible(true);
+								f.setVisible(false);
+								f.dispose();
+							}
+						} else {
+							Input inp = new Input(methodOption, t1.getText(), epsilon.getText(), numberOfIterations.getText(), LUOption);
 							//op.setVisible(true);
 							f.setVisible(false);
 							f.dispose();
 						}
-					}else {
-						Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText());
-						//op.setVisible(true);
-						f.setVisible(false);
-						f.dispose();
-						dispose();
+					}
+				}
+				else if(methodOption != 4) {
+					if(flag != 1 && methodOption != 0 && t1.getText().length() > 0 && t2.getText().length() > 0) {
+						if(methodOption == 5 || methodOption == 6) {
+							if(epsilon.getText().length() > 0 && numberOfIterations.getText().length() > 0){
+								Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText() , 0);
+								//op.setVisible(true);
+								f.setVisible(false);
+								f.dispose();
+							}
+						}else {
+							Input inp = new Input(methodOption , t1.getText() , epsilon.getText() , numberOfIterations.getText() , 0);
+							//op.setVisible(true);
+							f.setVisible(false);
+							f.dispose();
+						}
 					}
 				}
 				///////////////////////////
@@ -309,19 +376,23 @@ public class MainMenu extends JFrame{
 				//////////////////////////////////////
 				Operation op = new Operation();
 				if(methodOption == 1) {
+					Result r = new Result(op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)) , null);
 					op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 2) {
+					Result r = new Result(op.GaussElimination(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)), null);
 					op.GaussElimination(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 3) {
+					Result r = new Result(op.GaussJordan(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)),null);
 					op.GaussJordan(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 4) {
-					//LU result = new LU();
+					LU result = new LU();
 				}else if(methodOption == 5) {
+					//Result r = new Result(op.GaussSeidalSolver(augmented, numberOfIterations, epsilon) , null);
 					op.GaussSeidalSolver(augmented, new double[]{0,0,0}, Integer.parseInt(numberOfIterations.getText()), Integer.parseInt(epsilon.getText()));
 				}else if(methodOption == 6) {
+					//Result r = new Result(op.jacobi(augmented, numberOfIterations, epsilon) , null);
 					op.jacobi(augmented, new double[]{0,0,0}, Integer.parseInt(numberOfIterations.getText()), Integer.parseInt(epsilon.getText()));
 				}
-				op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				//Result r = new Result(x,lu); // sending the result to the result panel
 				f.setVisible(false);
 				f.dispose();
