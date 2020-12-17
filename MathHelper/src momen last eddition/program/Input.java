@@ -31,7 +31,7 @@ public class Input extends JFrame{
     JLabel l;
     JButton submit;
     JScrollPane scroll;
-	public Input(int methodOption , String n , String epsilon , String numberOfIterations) { 
+	public Input(int methodOption , String n , String epsilon , String numberOfIterations, int LUoption) {
 		this.size = Integer.parseInt(n);
 		this.methodOption = methodOption;
 		if( this.methodOption==5||this.methodOption==6) {
@@ -65,47 +65,95 @@ public class Input extends JFrame{
 	    this.add(p);
 	    p.add(l1);
 	    int r = 0, c = 0;
-	    for(int i=130;i<(p.getHeight()-80);i+=100) {
-	    	if(counterRow<size) {
-	    		counterRow++;
-	    		counterColumn=0;
-	    		counter = 1;
-	    		c = 0;
-	    		for(int j=100;j<(p.getWidth()-80);j+=100){
-	    			if(counterColumn<=size) {
-	    				if(counter != size+1) {
-	    					l = new JLabel("x" + counter);
-		    				l.setBounds(j-30, i, 60, 60);
-						    l.setForeground(Color.blue);
-						    l.setFont(new Font("atilic",Font.BOLD,20));
-						    counter++;
-	    					p.add(l);
-	    				}else {
-	    					l = new JLabel("=");
-		    				l.setBounds(j-30, i, 60, 60);
-						    l.setForeground(Color.blue);
-						    l.setFont(new Font("atilic",Font.BOLD,20));
-						    counter++;
-	    					p.add(l);
-	    				}				
-	    				counterColumn++;
-				    	t = new JTextField("");
-				    	t.setBounds(j, i, 60, 60);
-					    t.setForeground(Color.black);
-					    t.setFont(new Font("atilic",Font.BOLD,20));
-					    numbers[r][c] = t;
-					    c++;
-					    p.add(t);
-					    
-	    			}else {
-	    				break;
-	    			}
-	    		}
-	    		r++;
-    		}else{
-	    		break;
-	    	}
-	    }
+		if(LUoption != 0) {
+			for (int i = 130; i < (p.getHeight() - 80); i += 100) {
+				if (counterRow < size) {
+					counterRow++;
+					counterColumn = 0;
+					counter = 1;
+					c = 0;
+					for (int j = 100; j < (p.getWidth() - 80); j += 100) {
+						if (counterColumn <= size) {
+							if (counter != size + 1) {
+								l = new JLabel("x" + counter);
+								l.setBounds(j - 30, i, 60, 60);
+								l.setForeground(Color.blue);
+								l.setFont(new Font("atilic", Font.BOLD, 20));
+								counter++;
+								p.add(l);
+							} else {
+								l = new JLabel("=");
+								l.setBounds(j - 30, i, 60, 60);
+								l.setForeground(Color.blue);
+								l.setFont(new Font("atilic", Font.BOLD, 20));
+								counter++;
+								p.add(l);
+							}
+							counterColumn++;
+							t = new JTextField("");
+							t.setBounds(j, i, 60, 60);
+							t.setForeground(Color.black);
+							t.setFont(new Font("atilic", Font.BOLD, 20));
+							numbers[r][c] = t;
+							c++;
+							p.add(t);
+
+						} else {
+							break;
+						}
+					}
+					r++;
+				} else {
+					break;
+				}
+			}
+		}
+		else {
+			for(int i=130;i<(p.getHeight()-80);i+=100) {
+				if(counterRow<size) {
+					counterRow++;
+					counterColumn=0;
+					counter = 1;
+					c = 0;
+					for(int j=100;j<(p.getWidth()-80);j+=100){
+						if(counterColumn<=size) {
+							if(counter != size+1) {
+								l = new JLabel("x" + counter);
+								l.setBounds(j-30, i, 60, 60);
+								l.setForeground(Color.blue);
+								l.setFont(new Font("atilic",Font.BOLD,20));
+								counter++;
+								p.add(l);
+							}else {
+								l = new JLabel("=");
+								l.setBounds(j-30, i, 60, 60);
+								l.setForeground(Color.blue);
+								l.setFont(new Font("atilic",Font.BOLD,20));
+								counter++;
+								p.add(l);
+							}
+							counterColumn++;
+
+							t = new JTextField("");
+							t.setBounds(j, i, 60, 60);
+							t.setForeground(Color.black);
+							t.setFont(new Font("atilic",Font.BOLD,20));
+
+							numbers[r][c] = t;
+							c++;
+							p.add(t);
+
+						}else {
+							break;
+						}
+					}
+					r++;
+				}else{
+					break;
+				}
+
+			}
+		}
 	    p.add(submit);
 
 	    p.add(scroll);
@@ -119,7 +167,6 @@ public class Input extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == submit) {
 				/// check here for valid input
-
 				for(int i=0;i<numbers.length;i++) {
 						for(int j=0;j<numbers[0].length;j++) {
 							augmented[i][j] = Double.parseDouble(numbers[i][j].getText());
@@ -129,33 +176,34 @@ public class Input extends JFrame{
 				}
 				Operation op = new Operation();
 				if(methodOption == 1) {
+					Result r = new Result(op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)) , null);
 					op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 2) {
+					Result r = new Result(op.GaussElimination(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)), null);
 					op.GaussElimination(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 3) {
+					Result r = new Result(op.GaussJordan(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size)),null);
 					op.GaussJordan(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 				}else if(methodOption == 4) {
-					//LU result = new LU();
+					LU result = new LU();
 				}else if(methodOption == 5) {
+					//Result r = new Result(op.GaussSeidalSolver(augmented, numberOfIterations, epsilon) , null);
 					op.GaussSeidalSolver(augmented, new double[]{0,0,0}, numberOfIterations, epsilon);
 				}else if(methodOption == 6) {
+					//Result r = new Result(op.jacobi(augmented, numberOfIterations, epsilon) , null);
 					op.jacobi(augmented, new double[]{0,0,0}, numberOfIterations, epsilon);
 				}
 
-				op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
+				//op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size+1), op.getColumn(augmented, size));
 
 				for(int i=0;i<numbers.length;i++) {
 						System.out.println(op.GaussEliminationUsingPivoting(op.getFirstNColumn(augmented, size), op.getColumn(augmented, size))[i] + " ");
 				}
-
-				Result r = new Result(x,lu); // sending the result to the result panel
 				f.setVisible(false);
 				f.dispose();
+				dispose();
 			}
 		}
 	}
 	 
 }
-
-
-
